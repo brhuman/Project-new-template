@@ -1,0 +1,23 @@
+
+// Libries
+// @import "bootstrap-4.1.1/bootstrap"; // Full bootstrap
+// @import "bootstrap-4.1.1/bootstrap-grid"; // Only bootstrap grid
+// @import "bootstrap-4.1.1/bootstrap-reboot"; // only bootstrap reset
+// @import "slick/slick.scss"; // Slick slider
+// @import "slick/slick-theme.scss"; // Slick slider
+
+// Base
+@import "base/normalize.scss";
+@import "base/global";
+@import "base/buttons";
+@import "base/fonts";
+
+// Components
+@import "components/header";
+@import "components/footer"; 
+@import "components/modals";
+
+// Pages
+@import "pages/home-page";
+@import "pages/404-page"; 
+
