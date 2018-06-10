@@ -6,30 +6,32 @@ var gulp = require('gulp'),
     sourcemaps = require('gulp-sourcemaps'),	 
     autoprefixer = require('gulp-autoprefixer'), 
     notify = require('gulp-notify');
+    gulpWait = require('gulp-wait');  
 
 
 // Styles
 gulp.task('scss', function () {
-    return gulp.src('./app/styles/scss/main.scss')		 // путь загрузки
-        .pipe(sourcemaps.init()) 					 // создание file.sourceMap
+    return gulp.src('./app/styles/scss/main.scss')	  // download
+        .pipe(sourcemaps.init()) 					  // create file.sourceMap
+        .pipe(gulpWait(500))
         .pipe(scss())
-        .on('error', notify.onError(function (err) {  // не выкидывать при ошибке
-            return {								 // + выводить ее
+        .on('error', notify.onError(function (err) {  // dont stop after error
+            return {								  // show error
                 title: "SCSS ERROR",
                 message: err.message
             }
         }))
-        .pipe(autoprefixer([						 // добавление префиксера
+        .pipe(autoprefixer([						  // add prefix
             'last 15 versions',
             '> 1%',
             'ie 9',
             'ie 8'
-        ], { cascade: true }						 // оптимизация читабельности
+        ], { cascade: true }						  // cascade style optimization
         ))
 
-        .pipe(sourcemaps.write('.'))				 // добавление соурсмап
-        .pipe(gulp.dest('./app/styles/css/'))				 // путь выгрузки			
-        .pipe(browserSync.reload({ stream: true }));   // применить стили без перезагрузки страницы
+        .pipe(sourcemaps.write('.'))				   // add sourcemap
+        .pipe(gulp.dest('./app/styles/css/'))		   // css upload		
+        .pipe(browserSync.reload({ stream: true }));   // accept styles without page reloading
 });
 
 
@@ -37,21 +39,21 @@ gulp.task('scss', function () {
 gulp.task('server', function () {
     browserSync({
         server: {
-            baseDir: 'app'  // путь проекта
+            baseDir: 'app'  // Project way
         },
         // proxy: {
         //     target: "http://poskot.new.test/", 
         //     ws: true
         // },
-        notify: false   	// отключаем уведомления сервера
+        notify: false   	// Server notify show
     })
 });
 
 // Watch
-gulp.task('watch', ['server', 'scss'], function () {        // ['server', 'scss', 'scripts'] - выполнить до function
-    gulp.watch('./app/styles/**/*.scss', ['scss']);         // слежка за .scss
-    gulp.watch('./app/**/*.html', browserSync.reload);    // слежка за .html
-    gulp.watch('./app/js/**/*.js', browserSync.reload);   // слежка за .js
+gulp.task('watch', ['server', 'scss'], function () {        // ['server', 'scss', 'scripts'] - to do
+    gulp.watch('./app/styles/**/*.scss', ['scss']);       // watch at .scss
+    gulp.watch('./app/**/*.html', browserSync.reload);    // watch at .html
+    gulp.watch('./app/js/**/*.js', browserSync.reload);   // watch at .js
 });
 
 
